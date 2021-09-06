@@ -1,5 +1,5 @@
 # puzzlescript-tas
-play puzzlescript games quickly
+play [puzzlescript](https://www.puzzlescript.net/) games quickly
 
 # what games?
 * https://devdogg.itch.io/at-the-beach
