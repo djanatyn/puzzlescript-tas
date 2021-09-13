@@ -1,6 +1,6 @@
 import puppeteer from "https://deno.land/x/puppeteer@9.0.1/mod.ts";
 
-// const browser = await puppeteer.launch();
+// https://stackoverflow.com/a/65489871
 const browser = await puppeteer.launch({
   headless: false,
   args: [
@@ -49,19 +49,21 @@ await game.evaluate(() => {
   ];
 
   press(X);
-  setTimeout(press, 1000, X);
+  setTimeout(press, 500, X);
+
+  const BASE_DELAY = 600;
+  const LEVEL_TIME = 3000;
+  const STEP_TIME = 50;
 
   spellingBee.forEach((level, index) => {
+    setTimeout(press, BASE_DELAY + LEVEL_TIME * index, X);
     setTimeout(() => {
-      level.forEach((dir) => press(dir));
-    }, 2000 * (index + 1));
-    setTimeout(() => {
-      press(X);
-    }, 2000 * (index + 1) + 1000);
+        level.forEach((dir, index) => setTimeout(press, STEP_TIME * (index + 1) + 100, dir));
+    }, BASE_DELAY + LEVEL_TIME * index);
   });
 });
 
-await page.waitFor(5000);
+await page.waitFor(600 + (3000 * 5) + 1000);
 await page.screenshot({ path: "spellingbee.png" });
 
 await browser.close();
